@@ -23,7 +23,7 @@ class Category(models.Model):
 
 class Comment(models.Model):
     post = models.ForeignKey('Post', on_delete=models.CASCADE)
-    user = models.ForeignKey('User', on_delete=models.CASCADE)
+    user = models.ForeignKey(User, on_delete=models.CASCADE)
     text = models.TextField()
     date = models.DateTimeField(auto_now_add=True)
     rating = models.IntegerField(default=0)  # !!!!!
@@ -45,10 +45,10 @@ class Post(models.Model):
         (news, 'новость')
     ]
 
-    author = models.ForeignKey('Author', on_delete=models.CASCADE)
+    author = models.ForeignKey(Author, on_delete=models.CASCADE)
     type = models.CharField(max_length=1, choices=POSITIONS, default=news)
     date = models.DateTimeField(auto_now_add=True)
-    category = models.ManyToManyField('Category', through='PostCategory')
+    category = models.ManyToManyField(Category, through='PostCategory')
     title = models.CharField(max_length=225)
     text = models.TextField()
     rating = models.IntegerField(default=0)  # !!!!
@@ -66,6 +66,6 @@ class Post(models.Model):
 
 
 class PostCategory(models.Model):
-    post = models.ForeignKey('Post', on_delete=models.CASCADE)
-    category = models.ForeignKey('Category', on_delete=models.CASCADE)
+    post = models.ForeignKey(Post, on_delete=models.CASCADE)
+    category = models.ForeignKey(Category, on_delete=models.CASCADE)
 
