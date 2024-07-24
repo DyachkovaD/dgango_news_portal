@@ -9,10 +9,13 @@ Posts
 <h4>{{ posts|length }}</h4>
 {% endblock title %}
 
-<!-- В контенте на странице мы выводим все товары -->
 {% block content %}
    <h1>Все новости</h1>
-   <h3>{{ time_now|date:'M d Y' }}</h3>
+
+    <form action="" method="get">
+        {{ filterset.form.as_p }}
+        <input type="submit" value="Найти" />
+    </form>
 
    <hr>
    {% if posts %}
