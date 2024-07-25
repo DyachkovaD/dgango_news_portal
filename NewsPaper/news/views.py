@@ -52,9 +52,6 @@ class PostCreate(CreateView):
         post.save()
         return super().form_valid(form)
 
-    def get_success_url(self):
-        return reverse('post_detail', args=(self.object.id,))
-
 
 class PostUpdate(UpdateView):
     form_class = PostForm
