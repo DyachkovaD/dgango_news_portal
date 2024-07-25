@@ -8,10 +8,10 @@ class PostFilter(FilterSet):
     title = django_filters.CharFilter(
         field_name='title',
         label='Title',
-        lookup_expr='icontains'
+        lookup_expr='iregex'
     )
     author = django_filters.CharFilter(
-        field_name='author__user',
+        field_name='author__user__username',
         label='Author',
         lookup_expr='exact'
     )
