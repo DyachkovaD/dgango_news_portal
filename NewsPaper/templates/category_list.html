@@ -6,16 +6,21 @@
 
 {% block title %}
 Posts
-<h4>{{ posts|length }}</h4>
+<h4>{{ category_post_list|length }}</h4>
 {% endblock title %}
 
 <!-- В контенте на странице мы выводим все товары -->
 {% block content %}
+    {% if is_not_subscriber %}
+        <button> <a href="{% url 'subscribe' category.id %}"> Подписаться </a></button>
+    {% else %}
+        <button> <a href="{% url 'subscribe' category.id %}"> Отписаться </a></button>
+    {% endif %}
    <h1>Все новости</h1>
    <h3>{{ time_now|date:'M d Y' }}</h3>
 
    <hr>
-   {% if posts %}
+   {% if category_post_list %}
        <table>
            <tr>
                <td>Заголовок</td>
@@ -24,7 +29,7 @@ Posts
                <td>Содержание</td>
            </tr>
 
-           {% for post in posts %}
+           {% for post in category_post_list %}
            <tr>
                <td>{{ post.title|censor }}</td>
                <td>
