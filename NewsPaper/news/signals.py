@@ -3,7 +3,7 @@ from django.dispatch import receiver
 from django.core.mail import EmailMultiAlternatives
 from django.template.loader import render_to_string
 
-from ..NewsPaper import settings
+from django.conf import settings
 
 from .models import PostCategory
 
@@ -17,16 +17,16 @@ def send_notifications(preview, pk, title, subscribers):
          }
     )
     message = EmailMultiAlternatives(
-        subject=title.title(),
+        subject=title,
         body='',   # пустой, т.к. мы передаём шаблон
         from_email=settings.DEFAULT_FROM_EMAIL,
-        to=subscribers
+        to=subscribers,
     )
     message.attach_alternative(html_content, 'text/html') #text/html - это формат сообщения
     message.send()
 
 
-@receiver(m2m_changed, sender=PostCategory)
+@receiver(m2m_changed, sender=PostCategory, )
 # говорит нам, что письмо будет отправляться только во время соединения
 # поста и категории, т.е. добавления нового значения в таблицу PostCategory
 def notify_new_post(sender, instance, **kwargs): # instance - это сама новая статья

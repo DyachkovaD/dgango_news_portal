@@ -9,7 +9,7 @@ from django.contrib.auth.mixins import PermissionRequiredMixin
 
 from datetime import datetime
 
-from .models import Post, Category, UserCategory, PostCategory
+from .models import Post, Category
 from .filters import PostFilter
 from .forms import PostForm
 
