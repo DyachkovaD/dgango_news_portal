@@ -11,11 +11,11 @@ https://docs.djangoproject.com/en/4.2/ref/settings/
 """
 
 from pathlib import Path
-from dotenv import load_dotenv
+from dotenv import load_dotenv, find_dotenv
 import os
 
 # Build paths inside the project like this: BASE_DIR / 'subdir'.
-
+load_dotenv(find_dotenv())
 
 BASE_DIR = Path(__file__).resolve().parent.parent
 
@@ -164,7 +164,7 @@ ACCOUNT_FORMS = {'signup': 'news.forms.BasicSignupForm'}
 
 EMAIL_HOST = 'smtp.yandex.ru'
 EMAIL_PORT = 465
-EMAIL_HOST_USER = os.getenv('EMAIL_HOST_USER')
-EMAIL_HOST_PASSWORD = os.getenv('EMAIL_HOST_PASSWORD')
-DEFAULT_FROM_EMAIL = os.getenv('DEFAULT_FROM_EMAIL')
+EMAIL_HOST_USER = "greenlion.d"
+EMAIL_HOST_PASSWORD = "ntpmctlklpnuogtl"
+DEFAULT_FROM_EMAIL = "greenlion.d@yandex.ru"
 EMAIL_USER_SSL = True
