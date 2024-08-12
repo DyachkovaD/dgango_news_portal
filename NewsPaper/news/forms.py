@@ -3,6 +3,8 @@ from django.core.exceptions import ValidationError
 from allauth.account.forms import SignupForm
 from django.contrib.auth.models import Group
 
+from datetime import datetime
+
 from .models import Post
 
 
@@ -12,6 +14,13 @@ class PostForm(forms.ModelForm):
     class Meta:
         model = Post
         fields = ['title', 'author', 'category', 'text']
+
+    def clean(self):
+        cleaned_data = super(PostForm, self).clean()
+        author = cleaned_data.get('author')
+        posts_today = len(Post.objects.filter(author=author, date__day=datetime.today().day))
+        if posts_today >= 3:
+            raise ValidationError("Вы не можете создавать более трёх постов в день.")
 
 
 class BasicSignupForm(SignupForm):

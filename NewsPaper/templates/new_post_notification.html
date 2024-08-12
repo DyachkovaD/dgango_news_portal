@@ -1,11 +1,12 @@
 <!DOCTYPE html>
+
 <html>
 <head>
     <meta charset="UTF-8">
     <title>Уведомление</title>
 </head>
 <body>
-    <h1>Здравствуй. Новая статья <a href="{{ link }}">статья</a> в твоём любимом разделе!</h1>
-        <p>{{ text }}</p>
+    <h1>Здравствуй {{username}}. Новая статья <a href="{{ link }}">статья</a> в твоём любимом разделе!</h1>
+        <p>{{ text|truncatechars:50 }}</p>
 </body>
 </html>
