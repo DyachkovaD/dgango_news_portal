@@ -30,23 +30,19 @@ def send_notifications(text, pk, title, subscribers):
         message.attach_alternative(html_content, 'text/html') #text/html - это формат сообщения
         message.send()
 
-
-@receiver(m2m_changed, sender=PostCategory, )
-# говорит нам, что письмо будет отправляться только во время соединения
-# поста и категории, т.е. добавления нового значения в таблицу PostCategory
-def notify_new_post(sender, instance, **kwargs): # instance - это сама новая статья
-    if kwargs['action'] == 'post_add':           # нас интересуют случаи создания новой статьи, не изменения
-        categories = instance.category.all()
-        # subscribers_emails = []
-        subscribers = set()
-
-        for cat in categories:
-            cat_subscribers = cat.subscribers.all()
-            if cat_subscribers:
-                subscribers.add(*cat_subscribers)
-            # subscribers_emails += [s.email for s in subscribers]
-
-        send_notifications(instance.text, instance.pk, instance.title, subscribers)
+#
+# @receiver(m2m_changed, sender=PostCategory, )
+# def notify_new_post(sender, instance, **kwargs): # instance - это сама новая статья
+#     if kwargs['action'] == 'post_add':           # нас интересуют случаи создания новой статьи, не изменения
+#         categories = instance.category.all()
+#         subscribers = set()
+#
+#         for cat in categories:
+#             cat_subscribers = cat.subscribers.all()
+#             if cat_subscribers:
+#                 subscribers.add(*cat_subscribers)
+#
+#         send_notifications(instance.text, instance.pk, instance.title, subscribers)
 
 
 # @receiver(pre_save, sender=Post, )
