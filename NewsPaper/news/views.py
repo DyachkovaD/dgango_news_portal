@@ -67,6 +67,11 @@ class PostCreate(PermissionRequiredMixin, CreateView):
 
         return super().form_valid(form)
 
+    def get_form_kwargs(self):
+        kwargs = super().get_form_kwargs()
+        kwargs.update({'action': 'create'})
+        return kwargs
+
 
 class PostUpdate(PermissionRequiredMixin, LoginRequiredMixin, UpdateView):
     permission_required = ('news.change_post')
@@ -80,6 +85,11 @@ class PostUpdate(PermissionRequiredMixin, LoginRequiredMixin, UpdateView):
             return 'not_found.html'
         else:
             return 'post_edit.html'
+
+    def get_form_kwargs(self):
+        kwargs = super().get_form_kwargs()
+        kwargs.update({'action': 'update'})
+        return kwargs
 
 
 class PostDelete(DeleteView):

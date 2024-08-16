@@ -9,6 +9,11 @@ from .models import Post
 
 
 class PostForm(forms.ModelForm):
+
+    def __init__(self, *args, **kwargs):
+        self.action = kwargs.pop('action')
+        super().__init__(*args, **kwargs)
+
     text = forms.CharField(max_length=3000)
 
     class Meta:
@@ -19,8 +24,10 @@ class PostForm(forms.ModelForm):
         cleaned_data = super(PostForm, self).clean()
         author = cleaned_data.get('author')
         posts_today = len(Post.objects.filter(author=author, date__day=datetime.today().day))
-        if posts_today >= 3:
+        if self.action == 'create' and posts_today >= 3:
             raise ValidationError("Вы не можете создавать более трёх постов в день.")
+        else:
+            return cleaned_data
 
 
 class BasicSignupForm(SignupForm):

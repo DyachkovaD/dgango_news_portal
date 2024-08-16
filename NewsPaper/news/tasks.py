@@ -30,15 +30,16 @@ def send_notifications(text, pk, title, subscribers):
 
 @shared_task
 def new_post_notification(pk):
-            post = Post.objects.get(pk=pk)
-            categories = post.category.all()
-            subscribers = set()
+    post = Post.objects.get(pk=pk)
+    categories = post.category.all()
+    subscribers = set()
 
-            for cat in categories:
-                cat_subscribers = cat.subscribers.all()
-                if cat_subscribers:
-                    subscribers.update(*cat_subscribers)
-            send_notifications(post.text, post.pk, post.title, subscribers)
+    for cat in categories:
+        cat_subscribers = cat.subscribers.all()
+        if cat_subscribers:
+            subscribers.update(*cat_subscribers)
+
+    send_notifications(post.text, post.pk, post.title, subscribers)
 
 
 @shared_task
