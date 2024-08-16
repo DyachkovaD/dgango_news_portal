@@ -37,7 +37,7 @@ def new_post_notification(pk):
     for cat in categories:
         cat_subscribers = cat.subscribers.all()
         if cat_subscribers:
-            subscribers.update(*cat_subscribers)
+            subscribers.update(set(cat_subscribers))
 
     send_notifications(post.text, post.pk, post.title, subscribers)
 
