@@ -1,5 +1,3 @@
-import time
-
 from celery import shared_task
 import datetime
 
@@ -18,7 +16,7 @@ def send_notifications(text, pk, title, subscribers):
                 'username': user.username,
                 'text': text,
                 'link': f'http://127.0.0.1:8000/posts/{pk}'
-             }
+                }
         )
         message = EmailMultiAlternatives(
             subject=title,
@@ -31,10 +29,8 @@ def send_notifications(text, pk, title, subscribers):
 
 
 @shared_task
-def new_post_notification():
-    posts = Post.objects.filter(date=datetime.datetime.now() - datetime.timedelta(seconds=1))
-    if posts:
-        for post in posts:
+def new_post_notification(pk):
+            post = Post.objects.get(pk=pk)
             categories = post.category.all()
             subscribers = set()
 
@@ -42,7 +38,6 @@ def new_post_notification():
                 cat_subscribers = cat.subscribers.all()
                 if cat_subscribers:
                     subscribers.add(*cat_subscribers)
-
             send_notifications(post.text, post.pk, post.title, subscribers)
 
 
@@ -74,8 +69,3 @@ def daily_email_notification():
 
         msg.attach_alternative(html_content, 'text/html')
         msg.send()
-
-
-@shared_task
-def hello():
-    print('Hello')

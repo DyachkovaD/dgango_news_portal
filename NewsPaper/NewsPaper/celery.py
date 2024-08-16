@@ -7,24 +7,9 @@ app = Celery('NewsPaper')
 app.config_from_object('django.conf:settings', namespace='CELERY')
 app.autodiscover_tasks()
 
-app.conf.timezone = 'UTC'
 app.conf.beat_schedule = {
-    'hello_every_3_sec': {
-        'task': 'tasks.hello',
-        'schedule': crontab(minute='*/1'),
+    'daily_email_notification': {
+        'task': 'news.tasks.daily_email_notification',
+        'schedule': crontab(day_of_week='monday', hour='8'),
     },
 }
-
-# app.conf.beat_schedule = {
-#     'daily_email_notification': {
-#         'task': 'tasks.daily_email_notification',
-#         'schedule': crontab(minute='10', hour='15', day_of_week='thu'),
-#     },
-# }
-#
-# app.conf.beat_schedule = {
-#     'new_post_email_notification': {
-#         'task': 'tasks.new_post_notification',
-#         'schedule': 1,
-#     },
-# }
