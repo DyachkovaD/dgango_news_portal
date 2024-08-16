@@ -7,6 +7,7 @@ from django.views.generic import (
 from django.urls import reverse, reverse_lazy
 from django.contrib.auth.mixins import LoginRequiredMixin
 from django.contrib.auth.mixins import PermissionRequiredMixin
+from django.core.cache import cache
 
 from datetime import datetime
 
@@ -42,6 +43,13 @@ class PostDetail(DetailView):
     model = Post
     template_name = 'post_detail.html'
     context_object_name = 'post'
+
+    def get_object(self, *args, **kwargs):
+        obj = cache.get(f'post-{self.kwargs["pk"]}', None)
+        if not obj:
+            obj = super().get_object(queryset=self.queryset)
+            cache.set(f'post-{self.kwargs["pk"]}', obj)
+        return obj
 
 
 class PostCreate(PermissionRequiredMixin, CreateView):

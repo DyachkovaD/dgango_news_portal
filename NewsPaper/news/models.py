@@ -3,6 +3,7 @@ from django.contrib.auth.models import User
 from django.db.models import Sum
 from django.db.models.functions import Coalesce
 from django.urls import reverse
+from django.core.cache import cache
 
 
 from django.core.validators import MinValueValidator
@@ -68,7 +69,13 @@ class Post(models.Model):
         return f'{self.author.user}: {self.title}'
 
     def get_absolute_url(self):
-        return reverse('post_detail', args=[str(self.id)])
+        return reverse('post_detail', args=(str(self.pk), ))
+
+    def save(self, *args, **kwargs):
+        super().save(*args, **kwargs)
+
+        cache.delete(f'post-{self.pk}')
+
 
     def like(self):
         self.rating += 1
