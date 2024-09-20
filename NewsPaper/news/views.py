@@ -14,10 +14,7 @@ from datetime import datetime
 from .models import Post, Category
 from .filters import PostFilter
 from .forms import PostForm
-import logging
 
-
-logger = logging.getLogger(__name__)
 
 class PostsList(ListView):
     model = Post
@@ -66,9 +63,6 @@ class PostCreate(PermissionRequiredMixin, CreateView):
         post = form.save(commit=False)
         if self.request.path == '/posts/articles/create/':
             post.type = 'A'
-            logging.info(f'Создана новая статья, автор: {post.author}, заголовок: {post.title}')
-        else:
-            logging.info(f'Создана новая новость, автор: {post.author}, заголовок: {post.title}')
         post.save()
 
         return super().form_valid(form)
@@ -88,10 +82,8 @@ class PostUpdate(PermissionRequiredMixin, LoginRequiredMixin, UpdateView):
     def get_template_names(self):
         if 'articles' in self.request.path and self.object.type == 'N'\
               or 'news' in self.request.path and self.object.type == 'A':
-            logging.error(f'Попытка изменить не тот формат поста')
             return 'not_found.html'
         else:
-            logging.debug(f'Статья {self.object.title} изменена')
             return 'post_edit.html'
 
     def get_form_kwargs(self):
