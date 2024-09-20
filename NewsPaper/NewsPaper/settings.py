@@ -15,6 +15,8 @@ from pathlib import Path
 import django.core.cache.backends.filebased
 from dotenv import load_dotenv, find_dotenv
 import os
+import logging
+
 
 # Build paths inside the project like this: BASE_DIR / 'subdir'.
 load_dotenv(find_dotenv())
@@ -183,4 +185,79 @@ CACHES = {
         'BACKEND': 'django.core.cache.backends.filebased.FileBasedCache',
         'LOCATION': os.path.join(BASE_DIR, 'cache_files')
     }
+}
+
+LOGGING = {
+    'version': 1,
+    'disable_existing_loggers': False,
+    'style': '{',
+    'formatters': {             #time - level - module - message
+        'debug': {'format': '%(levelname)s - %(asctime)s - %(message)s'},
+        'warning': {'format': '%(levelname)s - %(asctime)s - %(message)s - %(pathname)s'},
+        'error': {'format': '%(levelname)s - %(asctime)s - %(message)s - %(pathname)s - %(exc_info)s'},
+        'general': {'format': '%(levelname)s - %(asctime)s - %(module)s'},
+        'errors': {'format': '%(levelname)s - %(asctime)s - %(message)s - %(pathname)s - %(exc_info)s'},
+        'security': {'format': '%(levelname)s - %(asctime)s - %(module)s - %(message)s'},
+    },
+
+    'handlers': {
+        'console': {
+            'level': 'DEBUG',
+            'class': 'logging.StreamHandler',
+            'formatter': 'debug',
+        },
+        'console_warning': {
+            'level': 'WARNING',
+            'class': 'logging.StreamHandler',
+            'formatter': 'warning',
+        },
+        'console_error': {
+            'level': 'ERROR',
+            'class': 'logging.StreamHandler',
+            'formatter': 'error',
+        },
+        'general': {
+            'class': 'logging.FileHandler',
+            'filename': 'general.log',
+            'level': 'INFO',
+            'formatter': 'general',
+        },
+        'errors': {
+            'class': 'logging.FileHandler',
+            'filename': 'errors.log',
+            'level': 'ERROR',
+            'formatter': 'errors',
+        },
+        'security': {
+            'class': 'logging.FileHandler',
+            'filename': 'security.log',
+            'level': 'INFO',
+            'formatter': 'security',
+        },
+    },
+
+    'loggers': {
+        # '': {
+        #     'handlers': ['console'],
+        #     'level': 'DEBUG'
+        # },
+        'django': {
+            'handlers': ['console', 'console_warning', 'console_error', 'general'],
+        },
+        'django.security': {
+            'handlers': ['security'],
+        },
+        'django.request': {
+            'handlers': ['errors'],
+        },
+        'django.server': {
+            'handlers': ['errors'],
+        },
+        'django.template': {
+            'handlers': ['errors'],
+        },
+        'django.db.backends': {
+            'handlers': ['errors'],
+        },
+    },
 }

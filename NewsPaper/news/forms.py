@@ -2,8 +2,9 @@ from django import forms
 from django.core.exceptions import ValidationError
 from allauth.account.forms import SignupForm
 from django.contrib.auth.models import Group
+from django.utils import timezone
 
-from datetime import datetime
+from datetime import timedelta
 
 from .models import Post
 
@@ -23,9 +24,10 @@ class PostForm(forms.ModelForm):
     def clean(self):
         cleaned_data = super(PostForm, self).clean()
         author = cleaned_data.get('author')
-        posts_today = len(Post.objects.filter(author=author, date__day=datetime.today().day))
+        time_limit = timezone.now() - timedelta(days=1)
+        posts_today = Post.objects.filter(author=author, date__gte=time_limit).count()
         if self.action == 'create' and posts_today >= 3:
-            raise ValidationError("Вы не можете создавать более трёх постов в день.")
+            raise ValidationError("Вы не можете создавать более трёх постов в сутки.")
         else:
             return cleaned_data
 

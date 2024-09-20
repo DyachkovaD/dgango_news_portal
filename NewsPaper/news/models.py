@@ -13,6 +13,9 @@ class Author(models.Model):
     user = models.OneToOneField(User, on_delete=models.CASCADE)
     rating = models.IntegerField(default=0)
 
+    def __str__(self):
+        return f'{self.user}'
+
     def update_rating(self):
         posts_rating = self.post_set.aggregate(pr=Coalesce(Sum('rating'), 0))['pr']
         comments_rating = self.user.comment_set.aggregate(cr=Coalesce(Sum('rating'), 0))['cr']
@@ -28,6 +31,10 @@ class Category(models.Model):
 
     def __str__(self):
         return self.name.title()
+
+    @property
+    def popularity(self):
+        return self.subscribers.count()
 
 
 class Comment(models.Model):
@@ -66,7 +73,7 @@ class Post(models.Model):
     rating = models.IntegerField(default=0)
 
     def __str__(self):
-        return f'{self.author.user}: {self.title}'
+        return f'{self.title}'
 
     def get_absolute_url(self):
         return reverse('post_detail', args=(str(self.pk), ))
@@ -75,7 +82,6 @@ class Post(models.Model):
         super().save(*args, **kwargs)
 
         cache.delete(f'post-{self.pk}')
-
 
     def like(self):
         self.rating += 1
