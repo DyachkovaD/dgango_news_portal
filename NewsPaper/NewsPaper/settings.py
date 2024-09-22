@@ -192,7 +192,7 @@ CACHES = {
         'LOCATION': os.path.join(BASE_DIR, 'cache_files')
     }
 }
-
+DEBUG = False
 LOGGING = {
     'version': 1,
     'disable_existing_loggers': False,
