@@ -169,6 +169,12 @@ EMAIL_HOST_PASSWORD = os.getenv('EMAIL_HOST_PASSWORD')
 DEFAULT_FROM_EMAIL = os.getenv('DEFAULT_FROM_EMAIL')
 EMAIL_USE_SSL = True
 
+ADMINS = [
+    ('Darya', 'd.dyachkova@bk.ru'),
+    # список всех админов в формате ('имя', 'их почта')
+]
+SERVER_EMAIL = os.getenv('DEFAULT_FROM_EMAIL')  # это будет у нас вместо аргумента FROM в массовой рассылке
+
 EMAIL_BACKEND = 'django.core.mail.backends.console.EmailBackend'
 
 APSCHEDULER_DATETIME_FORMAT = "N j, Y, f:s a"
@@ -264,18 +270,23 @@ LOGGING = {
         },
         'django.security': {
             'handlers': ['security'],
+            'propagate': True,
         },
         'django.request': {
             'handlers': ['errors', 'mail_admins'],
+            'propagate': True,
         },
         'django.server': {
             'handlers': ['errors', 'mail_admins'],
+            'propagate': True,
         },
         'django.template': {
             'handlers': ['errors'],
+            'propagate': True,
         },
         'django.db.backends': {
             'handlers': ['errors'],
+            'propagate': True,
         },
     },
 }
