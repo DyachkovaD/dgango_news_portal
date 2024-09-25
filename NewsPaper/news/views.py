@@ -8,6 +8,7 @@ from django.urls import reverse, reverse_lazy
 from django.contrib.auth.mixins import LoginRequiredMixin
 from django.contrib.auth.mixins import PermissionRequiredMixin
 from django.core.cache import cache
+from django.utils.translation import gettext as _
 
 from datetime import datetime
 
@@ -128,9 +129,9 @@ def subscribe(request, pk):
     category = Category.objects.get(id=pk)
     if user not in category.subscribers.all():
         category.subscribers.add(user)
-        message = 'Вы подписались на рассылку новостей категории'
+        message = _('You are subscribed')
     else:
         category.subscribers.remove(user)
-        message = 'Вы отписались от рассылки новостей категории'
+        message = _('You are unsubscribed')
     return render(request, 'subscribe.html', {'category': category, 'message': message})
 

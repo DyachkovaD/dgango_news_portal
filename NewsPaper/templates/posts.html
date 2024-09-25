@@ -2,7 +2,7 @@
 
 {% load my_filters %}
 {% load my_tags %}
-
+{% load i18n %}
 
 {% block title %}
 Posts
@@ -10,6 +10,7 @@ Posts
 {% endblock title %}
 
 <!-- В контенте на странице мы выводим все товары -->
+
 {% block content %}
    <h1>Все новости</h1>
    <h3>{{ time_now|date:'M d Y' }}</h3>
