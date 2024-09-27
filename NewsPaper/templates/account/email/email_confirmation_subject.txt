@@ -1,1 +1,4 @@
-Приветственное письмо от NewsPaper
+{% load i18n %}
+{% autoescape off %}
+{% blocktrans %}Please Confirm Your Email Address{% endblocktrans %}
+{% endautoescape %}
