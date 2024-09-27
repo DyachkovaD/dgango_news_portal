@@ -129,9 +129,14 @@ def subscribe(request, pk):
     category = Category.objects.get(id=pk)
     if user not in category.subscribers.all():
         category.subscribers.add(user)
-        message = _('You are subscribed')
-    else:
-        category.subscribers.remove(user)
-        message = _('You are unsubscribed')
+        message = _('Вы подписались на рассылку категории')
     return render(request, 'subscribe.html', {'category': category, 'message': message})
 
+
+def unsubscribe(request, pk):
+    user = request.user
+    category = Category.objects.get(id=pk)
+    if user in category.subscribers.all():
+        category.subscribers.remove(user)
+        message = _('Вы отписались от рассылки категории')
+    return render(request, 'unsubscribe.html', {'category': category, 'message': message})
