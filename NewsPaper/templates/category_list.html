@@ -14,7 +14,7 @@ Posts
     {% if is_not_subscriber %}
         <button> <a href="{% url 'subscribe' category.id %}"> Подписаться </a></button>
     {% else %}
-        <button> <a href="{% url 'unsubscribe' category.id %}"> Отписаться </a></button>
+        <button> <a href="{% url 'subscribe' category.id %}"> Отписаться </a></button>
     {% endif %}
    <h1>Все новости</h1>
    <h3>{{ time_now|date:'M d Y' }}</h3>

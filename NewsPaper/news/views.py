@@ -130,13 +130,20 @@ def subscribe(request, pk):
     if user not in category.subscribers.all():
         category.subscribers.add(user)
         message = _('Вы подписались на рассылку категории')
+    else:
+        message = _('Вы уже пописаны')
+        # unsubscribe(request, pk)
     return render(request, 'subscribe.html', {'category': category, 'message': message})
 
 
+@login_required
 def unsubscribe(request, pk):
     user = request.user
     category = Category.objects.get(id=pk)
     if user in category.subscribers.all():
         category.subscribers.remove(user)
-        message = _('Вы отписались от рассылки категории')
+        message = _('Вы отписались от рассылки категории ')
+    else:
+        message = _('Вы ещё не пописаны')
+        # subscribe(request, pk)
     return render(request, 'unsubscribe.html', {'category': category, 'message': message})
