@@ -8,7 +8,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: PACKAGE VERSION\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2024-09-29 20:31+0300\n"
+"POT-Creation-Date: 2024-09-29 20:59+0300\n"
 "PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
 "Language-Team: LANGUAGE <LL@li.org>\n"
@@ -39,3 +39,35 @@ msgstr "You are unsubscribed"
 #| msgid "Вы не подписаны"
 msgid "Вы ещё не пописаны"
 msgstr "You are not subscribed yet"
+
+#: .\templates\category_list.html:9
+msgid "Все новости"
+msgstr "Posts"
+
+#: .\templates\category_list.html:16
+msgid "Подписаться"
+msgstr "Subscribe"
+
+#: .\templates\category_list.html:18
+msgid "Отписаться"
+msgstr "Unsubscribe"
+
+#: .\templates\category_list.html:27
+msgid "Заголовок"
+msgstr "Title"
+
+#: .\templates\category_list.html:28
+msgid "Категории"
+msgstr "Categories"
+
+#: .\templates\category_list.html:29
+msgid "Дата публикации"
+msgstr "Date"
+
+#: .\templates\category_list.html:30
+msgid "Содержание"
+msgstr "Content"
+
+#: .\templates\category_list.html:48
+msgid "Новостей пока нет!"
+msgstr "No news yet!"
