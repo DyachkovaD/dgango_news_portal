@@ -6,7 +6,7 @@
 
 
 {% block title %}
-{% trans "Все новости" %}!
+{% trans "Все новости" %}
 <h4>{{ category_post_list|length }}</h4>
 {% endblock title %}
 
@@ -17,7 +17,7 @@
     {% else %}
         <button> <a href="{% url 'unsubscribe' category.id %}"> {% trans "Отписаться" %} </a></button>
     {% endif %}
-   <h1>Все новости</h1>
+s
    <h3>{{ time_now|date:'M d Y' }}</h3>
 
    <hr>
@@ -45,7 +45,7 @@
 
        </table>
    {% else %}
-       <h2>{% trans  'Новостей пока нет!' %}</h2>
+       <h2>{% trans 'Новостей пока нет!' %}</h2>
    {% endif %}
 
    {% if page_obj.has_previous %}
