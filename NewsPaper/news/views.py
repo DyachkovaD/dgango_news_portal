@@ -1,6 +1,6 @@
 from django.contrib.auth.decorators import login_required
 from django.core.exceptions import ValidationError
-from django.shortcuts import get_object_or_404, render
+from django.shortcuts import get_object_or_404, render, redirect
 from django.views.generic import (
     ListView, DetailView, CreateView, UpdateView, DeleteView
 )
@@ -127,23 +127,13 @@ class CategoryList(ListView):
 def subscribe(request, pk):
     user = request.user
     category = Category.objects.get(id=pk)
-    if user not in category.subscribers.all():
-        category.subscribers.add(user)
-        message = _('Вы подписались на рассылку категории')
-    else:
-        message = _('Вы уже пописаны')
-        # unsubscribe(request, pk)
-    return render(request, 'subscribe.html', {'category': category, 'message': message})
+    category.subscribers.add(user)
+    return redirect('category_list', pk)
 
 
 @login_required
 def unsubscribe(request, pk):
     user = request.user
     category = Category.objects.get(id=pk)
-    if user in category.subscribers.all():
-        category.subscribers.remove(user)
-        message = _('Вы отписались от рассылки категории ')
-    else:
-        message = _('Вы ещё не пописаны')
-        # subscribe(request, pk)
-    return render(request, 'unsubscribe.html', {'category': category, 'message': message})
+    category.subscribers.remove(user)
+    return redirect('category_list', pk)
