@@ -1,6 +1,7 @@
 <!DOCTYPE html>
 
 {% load i18n %}
+{% load tz %}
 
 <html lang="en">
     <head>
@@ -22,8 +23,9 @@
                 <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation"><span class="navbar-toggler-icon"></span></button>
                 <div class="collapse navbar-collapse" id="navbarSupportedContent">
                     <ul class="navbar-nav ms-auto mb-2 mb-lg-0">
-                        <li class="nav-item"><a class="nav-link active" aria-current="page" href="{% url 'home' %}">Аккаунт</a></li>
-                        <li class="nav-item"><a class="nav-link" href="{% url 'post_list' %}">Новости</a></li>
+                        <li class="nav-item"><a class="nav-link" href="{% url 'post_filter' %}"> 🔍 </a></li>
+                        <li class="nav-item"><a class="nav-link active" aria-current="page" href="{% url 'home' %}">{% trans 'Account' %}</a></li>
+                        <li class="nav-item"><a class="nav-link" href="{% url 'post_list' %}">{% trans 'Posts' %}</a></li>
                         <li class="nav-item dropdown">
                             <a class="nav-link dropdown-toggle" id="navbarDropdown" href="#" role="button" data-bs-toggle="dropdown" aria-expanded="false">Dropdown</a>
                             <ul class="dropdown-menu dropdown-menu-end" aria-labelledby="navbarDropdown">
@@ -54,6 +56,22 @@
                     </select>
                     <input type="submit" value="set">
                 </form>
+
+                {% get_current_timezone as TIME_ZONE %}
+                <form action="" method="POST">
+                    {% csrf_token %}
+                    <label for="timezone">Time zone:</label>
+                    <select name="timezone"  style="width: 150px">
+                         {% for tz in timezones %}
+                             <option value="{{ tz }}"{% if tz == TIME_ZONE %} selected {% endif %}>{{ tz }}</option>
+                         {% endfor %}
+                    </select>
+                    <input type="submit" value="set" id="timezone">
+                </form>
+
+            {{ TIME_ZONE }}
+            {{ current_time|timezone:TIME_ZONE }}
+
             <div class="text-center mt-5">
                 <h1>{% block title %} {% endblock title%}</h1>
                 <p class="lead">{% block content %} {% endblock content %}</p>

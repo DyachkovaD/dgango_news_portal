@@ -6,16 +6,16 @@
 
 
 {% block title %}
-{% trans "Все новости" %}
+{% trans "Posts" %}
 <h4>{{ category_post_list|length }}</h4>
 {% endblock title %}
 
 <!-- В контенте на странице мы выводим все товары -->
 {% block content %}
     {% if is_not_subscriber %}
-        <button> <a href="{% url 'subscribe' category.id %}"> {% trans "Подписаться" %} </a></button>
+        <button> <a href="{% url 'subscribe' category.id %}"> {% trans "Subscribe" %} </a></button>
     {% else %}
-        <button> <a href="{% url 'unsubscribe' category.id %}"> {% trans "Отписаться" %} </a></button>
+        <button> <a href="{% url 'unsubscribe' category.id %}"> {% trans "Unsubscribe" %} </a></button>
     {% endif %}
 s
    <h3>{{ time_now|date:'M d Y' }}</h3>
@@ -24,10 +24,10 @@ s
    {% if category_post_list %}
        <table>
            <tr>
-               <td>{% trans 'Заголовок' %}</td>
-               <td>{% trans 'Категории' %}</td>
-               <td>{% trans 'Дата публикации' %}</td>
-               <td>{% trans 'Содержание' %}</td>
+               <td>{% trans 'Title' %}</td>
+               <td>{% trans 'Categories' %}</td>
+               <td>{% trans 'Date' %}</td>
+               <td>{% trans 'Content' %}</td>
            </tr>
 
            {% for post in category_post_list %}
@@ -45,7 +45,7 @@ s
 
        </table>
    {% else %}
-       <h2>{% trans 'Новостей пока нет!' %}</h2>
+       <h2>{% trans 'No news yet ' %}</h2>
    {% endif %}
 
    {% if page_obj.has_previous %}

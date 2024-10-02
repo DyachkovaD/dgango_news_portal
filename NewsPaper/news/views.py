@@ -1,23 +1,41 @@
 from django.contrib.auth.decorators import login_required
 from django.core.exceptions import ValidationError
+from django.http import HttpResponse
 from django.shortcuts import get_object_or_404, render, redirect
 from django.views.generic import (
-    ListView, DetailView, CreateView, UpdateView, DeleteView
+    ListView, DetailView, CreateView, UpdateView, DeleteView, View
 )
 from django.urls import reverse, reverse_lazy
 from django.contrib.auth.mixins import LoginRequiredMixin
 from django.contrib.auth.mixins import PermissionRequiredMixin
 from django.core.cache import cache
-from django.utils.translation import gettext as _
+from django.utils import timezone
 
 from datetime import datetime
 
 from .models import Post, Category
 from .filters import PostFilter
 from .forms import PostForm
+import pytz
+
+
+class Time(ListView):
+    template_name = 'flatpages/default.html'
+
+    def get_context_data(self, **kwargs):
+        context = super().get_context_data(**kwargs)
+        context['current_time'] = timezone.now()
+        context['timezones'] = pytz.common_timezones  # добавляем все доступные часовые пояса
+
+        return context
+
+    def post(self, request):
+        request.session['django_timezone'] = request.POST['timezone']
+        return redirect(request.META['HTTP_REFERER'])  #перенаправление на текущую страницу (просто обнавление страницы)
 
 
 class PostsList(ListView):
+    #. Translators: This message appears on the home page only
     model = Post
     ordering = '-date'
     context_object_name = 'posts'
@@ -38,6 +56,7 @@ class PostsList(ListView):
         if self.request.path == '/posts/search/':
             return 'search.html'
         return 'posts.html'
+
 
 
 class PostDetail(DetailView):

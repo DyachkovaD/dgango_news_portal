@@ -42,6 +42,7 @@ AUTHENTICATION_BACKENDS = [
 ]
 
 INSTALLED_APPS = [
+    'modeltranslation',
     'django.contrib.admin',
     'django.contrib.auth',
     'django.contrib.contenttypes',
@@ -72,6 +73,8 @@ MIDDLEWARE = [
     'django.contrib.messages.middleware.MessageMiddleware',
     'django.middleware.clickjacking.XFrameOptionsMiddleware',
     'allauth.account.middleware.AccountMiddleware',
+
+    'news.middlewares.TimezoneMiddleware',
 ]
 
 ROOT_URLCONF = 'NewsPaper.urls'
@@ -276,6 +279,7 @@ CACHES = {
 #         # },
 #         'django': {
 #             'handlers': ['console', 'console_warning', 'console_error', 'general'],
+#             'level': 'DEBUG'
 #         },
 #         'django.security': {
 #             'handlers': ['security'],

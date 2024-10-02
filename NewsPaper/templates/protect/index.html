@@ -1,23 +1,24 @@
 {% extends "flatpages/default.html" %}
+{% load i18n %}
 
 {% block content %}
-<h2>Страница авторизованного пользователя {{request.user.username}}</h2>
+<h2>{% trans 'Page of authorised user' %} {{request.user.username}}</h2>
 <div>
-    Имя: {{ user.username }} <br>
-    Почта: {{ user.email }} <br>
-    Подписка на категории:
+    {% trans 'Name' %}: {{ user.username }} <br>
+    {% trans 'Email' %}: {{ user.email }} <br>
+    {% trans 'Subscribed categories' %}:
     {% if user.categories %}
         {% for category in user.categories.all %}
             {{ category.name }}
         {% endfor %}
     {% else %}
-        Нет подписок
+        {% trans 'No subscribed category yet' %}
     {% endif %}
     <br>
     <br>
 </div>
-<button> <a href="{% url 'account_logout' %}">Выйти</a> </button>
+<button> <a href="{% url 'account_logout' %}">{% trans 'Exit' %}</a> </button>
 {% if is_author %}
-<button> <a href="upgrade/">Стать автором</a> </button>
+<button> <a href="upgrade/">{% trans 'Become an author' %}</a> </button>
 {% endif %}
 {% endblock %}

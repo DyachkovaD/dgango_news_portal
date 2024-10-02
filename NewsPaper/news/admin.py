@@ -1,6 +1,7 @@
 from django.contrib import admin
-
 from .models import Post, Category
+from translation import *
+from modeltranslation.admin import TranslationAdmin
 
 
 class PostAdmin(admin.ModelAdmin):
@@ -8,7 +9,8 @@ class PostAdmin(admin.ModelAdmin):
     list_filter = ('author', 'type', )
 
 
-class CategoryAdmin(admin.ModelAdmin):
+class CategoryAdmin(TranslationAdmin, admin.ModelAdmin):
+    model = Category
     list_display = ('name', 'popularity', )
     list_filter = ('name', )
 

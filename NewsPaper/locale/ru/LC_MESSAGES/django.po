@@ -1,0 +1,98 @@
+# SOME DESCRIPTIVE TITLE.
+# Copyright (C) YEAR THE PACKAGE'S COPYRIGHT HOLDER
+# This file is distributed under the same license as the PACKAGE package.
+# FIRST AUTHOR <EMAIL@ADDRESS>, YEAR.
+#
+#, fuzzy
+msgid ""
+msgstr ""
+"Project-Id-Version: PACKAGE VERSION\n"
+"Report-Msgid-Bugs-To: \n"
+"POT-Creation-Date: 2024-10-01 13:52+0300\n"
+"PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
+"Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
+"Language-Team: LANGUAGE <LL@li.org>\n"
+"Language: \n"
+"MIME-Version: 1.0\n"
+"Content-Type: text/plain; charset=UTF-8\n"
+"Content-Transfer-Encoding: 8bit\n"
+"Plural-Forms: nplurals=4; plural=(n%10==1 && n%100!=11 ? 0 : n%10>=2 && n"
+"%10<=4 && (n%100<12 || n%100>14) ? 1 : n%10==0 || (n%10>=5 && n%10<=9) || (n"
+"%100>=11 && n%100<=14)? 2 : 3);\n"
+
+#: .\templates\category_list.html:9 .\templates\flatpages\default.html:27
+#: .\templates\posts.html:9 .\templates\search.html:9
+msgid "Posts"
+msgstr "Все новости"
+
+#: .\templates\category_list.html:16
+msgid "Subscribe"
+msgstr "Подписаться"
+
+#: .\templates\category_list.html:18
+msgid "Unsubscribe"
+msgstr "Отписаться"
+
+#: .\templates\category_list.html:27 .\templates\posts.html:37
+#: .\templates\search.html:41
+msgid "Title"
+msgstr "Заголовок"
+
+#: .\templates\category_list.html:28 .\templates\posts.html:38
+#: .\templates\search.html:42
+msgid "Categories"
+msgstr "Категории"
+
+#: .\templates\category_list.html:29 .\templates\posts.html:39
+#: .\templates\search.html:43
+msgid "Date"
+msgstr "Дата публикации"
+
+#: .\templates\category_list.html:30 .\templates\posts.html:40
+#: .\templates\search.html:44
+msgid "Content"
+msgstr "Содержание"
+
+#: .\templates\category_list.html:48
+#, fuzzy
+#| msgid "No news yet"
+msgid "No news yet "
+msgstr "Пока нет новостей"
+
+#: .\templates\flatpages\default.html:26
+msgid "Account"
+msgstr "Аккаунт "
+
+#: .\templates\posts.html:58 .\templates\search.html:62
+msgid "No news yet!"
+msgstr "Пока нет новостей"
+
+#: .\templates\protect\index.html:5
+msgid "Page of authorised user"
+msgstr "Страница авторизованного пользователя"
+
+#: .\templates\protect\index.html:7
+msgid "Name"
+msgstr "Имя"
+
+#: .\templates\protect\index.html:8
+msgid "Email"
+msgstr "Почта"
+
+#: .\templates\protect\index.html:9
+#, fuzzy
+#| msgid "Subscribe"
+msgid "Subscribed categories"
+msgstr "Подписаться"
+
+#: .\templates\protect\index.html:15
+msgid "No subscribed category yet"
+msgstr "Нет подписок на категории"
+
+#: .\templates\protect\index.html:20
+msgid "Exit"
+msgstr "Выход"
+
+#: .\templates\protect\index.html:22
+msgid "Become an author"
+msgstr "Стать автором"

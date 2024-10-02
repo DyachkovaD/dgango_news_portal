@@ -3,25 +3,25 @@
 {% load my_filters %}
 {% load my_tags %}
 {% load i18n %}
+{% load tz %}
 
 {% block title %}
-<h1>{% trans 'Все новости' %}</h1>
+<h1>{% trans 'Posts' %}</h1>
 <h4>{{ posts|length }}</h4>
 {% endblock title %}
 
-<!-- В контенте на странице мы выводим все товары -->
 
 {% block content %}
-   <h3>{{ time_now|date:'M d Y' }}</h3>
 
+<!--   <h3>{{ time_now|date:'M d Y' }}</h3>-->
    <hr>
    {% if posts %}
-       <table>
+       <table style="margin: 0 auto">
            <tr>
-               <td>Заголовок</td>
-               <td>Категории</td>
-               <td>Дата публикации</td>
-               <td>Содержание</td>
+               <td width="200">{% trans 'Title' %}</td>
+               <td width="150">{% trans 'Categories' %}</td>
+               <td>{% trans 'Date' %}</td>
+               <td width="200">{% trans 'Content' %}</td>
            </tr>
 
            {% for post in posts %}
@@ -39,7 +39,7 @@
 
        </table>
    {% else %}
-       <h2>Новостей пока нет!</h2>
+       <h2>{% trans 'No news yet!' %}</h2>
    {% endif %}
 
    {% if page_obj.has_previous %}
