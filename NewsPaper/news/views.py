@@ -9,29 +9,23 @@ from django.urls import reverse, reverse_lazy
 from django.contrib.auth.mixins import LoginRequiredMixin
 from django.contrib.auth.mixins import PermissionRequiredMixin
 from django.core.cache import cache
-from django.utils import timezone
+from rest_framework import viewsets
+from rest_framework import permissions
 
 from datetime import datetime
+
+from rest_framework.permissions import IsAuthenticatedOrReadOnly
 
 from .models import Post, Category
 from .filters import PostFilter
 from .forms import PostForm
-import pytz
+from .serializers import *
 
 
-class Time(ListView):
-    template_name = 'flatpages/default.html'
-
-    def get_context_data(self, **kwargs):
-        context = super().get_context_data(**kwargs)
-        context['current_time'] = timezone.now()
-        context['timezones'] = pytz.common_timezones  # добавляем все доступные часовые пояса
-
-        return context
-
+class Time(View):
     def post(self, request):
         request.session['django_timezone'] = request.POST['timezone']
-        return redirect(request.META['HTTP_REFERER'])  #перенаправление на текущую страницу (просто обнавление страницы)
+        return redirect(request.META['HTTP_REFERER'])  # перенаправление на текущую страницу (просто обнавление страницы)
 
 
 class PostsList(ListView):
@@ -58,7 +52,6 @@ class PostsList(ListView):
         return 'posts.html'
 
 
-
 class PostDetail(DetailView):
     model = Post
     template_name = 'post_detail.html'
@@ -73,7 +66,6 @@ class PostDetail(DetailView):
 
 
 class PostCreate(PermissionRequiredMixin, CreateView):
-    permission_required = ('news.add_post')
 
     form_class = PostForm
     model = Post
@@ -142,6 +134,18 @@ class CategoryList(ListView):
         return context
 
 
+class NewsViewset(viewsets.ModelViewSet):
+    queryset = Post.objects.filter(type='N')
+    serializer_class = PostSerializer
+    permission_classes = [IsAuthenticatedOrReadOnly]
+
+
+class ArticlesViewset(viewsets.ModelViewSet):
+    queryset = Post.objects.filter(type='A')
+    serializer_class = PostSerializer
+    permission_classes = [IsAuthenticatedOrReadOnly]
+
+
 @login_required
 def subscribe(request, pk):
     user = request.user
@@ -156,3 +160,4 @@ def unsubscribe(request, pk):
     category = Category.objects.get(id=pk)
     category.subscribers.remove(user)
     return redirect('category_list', pk)
+

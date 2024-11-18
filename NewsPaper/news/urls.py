@@ -1,10 +1,9 @@
 from django.urls import path
-from .views import \
-    (PostsList, PostDetail, PostCreate, PostUpdate, PostDelete, CategoryList, Time, subscribe, unsubscribe)
+from .views import *
 
 urlpatterns = [
     path('', PostsList.as_view(), name='post_list'),
-    path('time', Time.as_view(), name='time'),
+    path('time_zone', Time.as_view(), name='time_zone'),
     path('<int:pk>', PostDetail.as_view(), name='post_detail'),
     path('search/', PostsList.as_view(), name='post_filter'),
     path('news/create/', PostCreate.as_view(), name='news_create'),

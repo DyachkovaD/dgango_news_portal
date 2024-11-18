@@ -16,6 +16,12 @@ Including another URLconf
 """
 from django.contrib import admin
 from django.urls import path, include
+from rest_framework import routers
+from news import views
+
+router = routers.DefaultRouter()
+router.register(r'news', views.NewsViewset, basename='news')
+router.register(r'articles', views.ArticlesViewset, basename='articles')
 
 urlpatterns = [
     path('admin/', admin.site.urls),
@@ -25,4 +31,6 @@ urlpatterns = [
     path('', include('protect.urls')),
     path('sign/', include('sign.urls')),
     path('i18n/', include('django.conf.urls.i18n')),
+    path('api-auth/', include('rest_framework.urls', namespace='rest_framework')),
+    path('api/v1/', include(router.urls))
 ]
