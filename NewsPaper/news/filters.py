@@ -17,7 +17,7 @@ class PostFilter(FilterSet):
     )
     date = django_filters.DateFilter(
         field_name='date',
-        label='Date of publication',
+        label='Date of publication (before)',
         lookup_expr='lt',
         widget=forms.DateInput(attrs={'type': 'date'})
     )

@@ -1,4 +1,6 @@
-<!DOCTYPE html>
+{% load i18n %}
+{% load tz %}
+
 <html lang="en">
     <head>
         <meta charset="utf-8" />
@@ -10,36 +12,61 @@
         <!-- Core theme CSS (includes Bootstrap)-->
         {% load static %}
         <link href="{% static 'css/styles.css' %}" rel="stylesheet" />
+        <style>
+            body {background-color: {% if current_time.hour >= 19 or  current_time.hour <= 7 %} darkcyan {% else %} powderblue {% endif %};}
+        </style>
     </head>
     <body>
         <!-- Responsive navbar-->
         <nav class="navbar navbar-expand-lg navbar-dark bg-dark">
             <div class="container">
-                <a class="navbar-brand" href="#">Start Bootstrap</a>
+                <a class="navbar-brand" href="#">NewsPaper</a>
                 <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation"><span class="navbar-toggler-icon"></span></button>
                 <div class="collapse navbar-collapse" id="navbarSupportedContent">
                     <ul class="navbar-nav ms-auto mb-2 mb-lg-0">
-                        <li class="nav-item"><a class="nav-link active" aria-current="page" href="#">Home</a></li>
-                        <li class="nav-item"><a class="nav-link" href="#">Link</a></li>
-                        <li class="nav-item dropdown">
-                            <a class="nav-link dropdown-toggle" id="navbarDropdown" href="#" role="button" data-bs-toggle="dropdown" aria-expanded="false">Dropdown</a>
-                            <ul class="dropdown-menu dropdown-menu-end" aria-labelledby="navbarDropdown">
-                                <li><a class="dropdown-item" href="#">Action</a></li>
-                                <li><a class="dropdown-item" href="#">Another action</a></li>
-                                <li><hr class="dropdown-divider" /></li>
-                                <li><a class="dropdown-item" href="#">Something else here</a></li>
-                            </ul>
-                        </li>
+                        <li class="nav-item"><a class="nav-link" href="{% url 'post_filter' %}"> 🔍 </a></li>
+                        <li class="nav-item"><a class="nav-link active" aria-current="page" href="{% url 'home' %}">{% trans 'Account' %}</a></li>
+                        <li class="nav-item"><a class="nav-link" href="{% url 'post_list' %}">{% trans 'Posts' %}</a></li>
                     </ul>
                 </div>
             </div>
         </nav>
         <!-- Page content-->
         <div class="container">
+                <form action="{% url 'set_language' %}" method="POST"> {% csrf_token %} <!-- Не забываем по csrf_token для POST запросов -->
+                    <input type="hidden" name="next" value="{{ redirect_to }}">
+
+                    <select name="language" id="">
+                        {% get_available_languages as LANGUAGES %} <!-- получаем языки -->
+                        {% get_language_info_list for LANGUAGES as languages %} <!-- Помещаем их в список languages -->
+                        {% get_current_language as LANGUAGE_CODE %}
+                        {% for language in languages %} <!-- Итерируясь по списку, выводим их название на языке пользователя и код -->
+                            <option value="{{ language.code }}" {% if language.code == LANGUAGE_CODE %} selected {% endif %}>
+                                {{ language.name_local }} - {{ language.code }}
+                            </option>
+                        {% endfor %}
+                    </select>
+                    <input type="submit" value="set">
+                </form>
+
+                {% get_current_timezone as TIME_ZONE %}
+                <form action="{% url 'time_zone' %}" method="POST">
+                    {% csrf_token %}
+                    <label for="timezone">Time zone:</label>
+                    <select name="timezone"  style="width: 150px">
+                         {% for tz in timezones %}
+                             <option value="{{ tz }}"{% if tz == TIME_ZONE %} selected {% endif %}>{{ tz }}</option>
+                         {% endfor %}
+                    </select>
+                    <input type="submit" value="set" id="timezone">
+                </form>
+
+            {{ TIME_ZONE }}
+            {{ current_time|timezone:TIME_ZONE }}
+
             <div class="text-center mt-5">
                 <h1>{% block title %} {% endblock title%}</h1>
                 <p class="lead">{% block content %} {% endblock content %}</p>
-                <p>Bootstrap v5.2.3</p>
             </div>
         </div>
     </body>

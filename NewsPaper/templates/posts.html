@@ -2,44 +2,45 @@
 
 {% load my_filters %}
 {% load my_tags %}
-
+{% load i18n %}
+{% load tz %}
 
 {% block title %}
-Posts
+<h1>{% trans 'Posts' %}</h1>
 <h4>{{ posts|length }}</h4>
 {% endblock title %}
 
-<!-- В контенте на странице мы выводим все товары -->
-{% block content %}
-   <h1>Все новости</h1>
-   <h3>{{ time_now|date:'M d Y' }}</h3>
 
+{% block content %}
+
+<!--   <h3>{{ time_now|date:'M d Y' }}</h3>-->
    <hr>
    {% if posts %}
-       <table>
+       <table style="margin: 0 auto">
            <tr>
-               <td>Заголовок</td>
-               <td>Категории</td>
-               <td>Дата публикации</td>
-               <td>Содержание</td>
+               <td width="200" align="center">{% trans 'Title' %}</td>
+               <td width="150" align="center">{% trans 'Categories' %}</td>
+               <td align="center">{% trans 'Date' %}</td>
+               <td width="200" align="center">{% trans 'Content' %}</td>
            </tr>
 
            {% for post in posts %}
            <tr>
                <td>{{ post.title|censor }}</td>
-               <td>
+               <td width="150" align="center">
                    {% for category in post.category.all %}
                    <a href="{% url 'category_list' category.id %}">{{ category }}</a>
                    {% endfor %}
                </td>
-               <td>{{ post.date|date:'d M Y' }}</td>
+               <td width="120" align="center">{{ post.date|date:'d M Y' }}</td>
                <td>{{ post.text|truncatechars:20|censor }}</td>
+               <td></td>
            </tr>
            {% endfor %}
 
        </table>
    {% else %}
-       <h2>Новостей пока нет!</h2>
+       <h2>{% trans 'No news yet!' %}</h2>
    {% endif %}
 
    {% if page_obj.has_previous %}

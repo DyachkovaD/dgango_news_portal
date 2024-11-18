@@ -21,4 +21,3 @@ def notify_new_post(sender, instance, **kwargs):
 #         posts_today = len(Post.objects.filter(author=author, date__day=datetime.today().day))
 #         if posts_today >= 3:
 #             return PermissionDenied
-
