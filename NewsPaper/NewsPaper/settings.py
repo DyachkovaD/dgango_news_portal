@@ -182,7 +182,6 @@ DEFAULT_FROM_EMAIL = os.getenv('DEFAULT_FROM_EMAIL')
 EMAIL_USE_SSL = True
 
 ADMINS = [
-    ('Darya', 'd.dyachkova@bk.ru'),
     # список всех админов в формате ('имя', 'их почта')
 ]
 SERVER_EMAIL = os.getenv('DEFAULT_FROM_EMAIL')  # это будет у нас вместо аргумента FROM в массовой рассылке
